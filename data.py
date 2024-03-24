@@ -64,37 +64,22 @@ def get_records():
         print(f"An error occurred: {str(e)}")
         return []
 
-# Get records from the Excel file
-records = get_records()
-
-# Print all records
-# if records:
-#     for idx, record in enumerate(records, start=1):
-#         print(f"Record {idx}:")
-#         print(record)
-#         print()
-
-# if records:
-#     first_record = records[0]
-#     for subject, data in first_record['subjects'].items():
-#         print(f"Subject: {subject}")
-#         print("Activities:")
-#         for idx, activity in enumerate(data['activity_marks'], start=1):
-#             print(f"c{idx}: {activity}")
-#         print()
-# else:
-#     print("No records found.")
-if records:
-    for idx, record in enumerate(records, start=1):
-        print(f"Record {idx}:")
-        print(f"Name: {record['name']}")
-        for subject, data in record['subjects'].items():
-            print(f"Subject: {subject}")
-            print("Activities:")
-            for idx, activity in enumerate(data['activity_marks'], start=1):
-                print(f"c{idx}: {activity}")
+def excell_to_db(records=get_records()):
+    if records:
+        for idx, record in enumerate(records, start=1):
+            print(f"Record {idx}:")
+            print(f"Name: {record['name']}")
+            for subject, data in record['subjects'].items():
+                print(f"Subject: {subject}")
+                print("Activities:")
+                for idx, activity in enumerate(data['activity_marks'], start=1):
+                    print(f"c{idx}: {activity}")
+                print()
             print()
-        print()
-else:
-    print("No records found.")
- 
+    else:
+        print("No records found.")
+
+# call to db insert
+
+excell_to_db()
+        
