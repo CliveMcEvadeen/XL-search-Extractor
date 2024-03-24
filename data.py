@@ -78,8 +78,57 @@ def excell_to_db(records=get_records()):
             print()
     else:
         print("No records found.")
+        
+# data test db variables
+        
+def excell_to_db_var(records=get_records()):
+    data_list = []
+    if records:
+        for record in records:
+            name = str(record['name'])
+            lin=str(record['lin'])
+            sex=str(record['sex'])
+            stream=str(record['stream'])
+
+            subjects_data = []
+            for sub, data in record['subjects'].items():
+                subject = sub
+                activity_vars = {}
+                for idx, activity in enumerate(data['activity_marks'], start=1):
+                    activity_vars[f'c{idx}'] = activity
+                subjects_data.append({'subject': subject, 'activity_vars': activity_vars})
+            data_list.append({'name': name,'lin':lin, 'sex':sex, 'stream': stream, 'subjects_data': subjects_data})
+    else:
+        print("No records found.")
+    
+    return data_list
+
+
 
 # call to db insert
 
-excell_to_db()
+# excell_to_db()
+print(excell_to_db_var()[0]['name'])
+print(excell_to_db_var()[0]['lin'])
+print(excell_to_db_var()[0]['sex'])
+print(excell_to_db_var()[0]['stream'])
+
+subject_details={}
+
+for subject_data in excell_to_db_var()[0]['subjects_data']:
+    for subject, activities in subject_data.items():
+        subject_details[subject]=activities
+
+        # print(subject_details)
+        print(subject_details[subject])
+
+# print(excell_to_db_var()[0]['subjects_data'][0]['activity_vars']['c1'])
+# print(excell_to_db_var()[0]['subjects_data'][0]['activity_vars']['c2'])
+# print(excell_to_db_var()[0]['subjects_data'][0]['activity_vars']['c3'])
+# print(excell_to_db_var()[0]['subjects_data'][0]['activity_vars']['c4'])
+
+
+
+# for data in excell_to_db_var():
+    # print(data)
         
