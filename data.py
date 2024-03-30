@@ -103,32 +103,33 @@ def excell_to_db_var(records=get_records()):
     
     return data_list
 
-
-
 # call to db insert
+def overall_student_record():
 
-# excell_to_db()
-print(excell_to_db_var()[0]['name'])
-print(excell_to_db_var()[0]['lin'])
-print(excell_to_db_var()[0]['sex'])
-print(excell_to_db_var()[0]['stream'])
+    '''collecting student data and inserting it into the db'''
 
-subject_details={}
+    for student_data in excell_to_db_var():
+        name=student_data['name']
+        lin=student_data['lin']
+        gender=student_data['sex']
+        stream=student_data['stream']
 
-for subject_data in excell_to_db_var()[0]['subjects_data']:
-    for subject, activities in subject_data.items():
-        subject_details[subject]=activities
+        subject_details={}
 
-        # print(subject_details)
-        print(subject_details[subject])
+        for subject_data in student_data['subjects_data']:
+            for subject, activities in subject_data.items():
+                subject_details[subject]=activities
+                
+            # subject_and_activities={subject_details['subject']:subject_details['activity_vars']})
+                c1=subject_details['activity_vars']['c1']
+                c2=subject_details['activity_vars']['c2']
+                c3=subject_details['activity_vars']['c3']
+                c4=subject_details['activity_vars']['c4']
 
-# print(excell_to_db_var()[0]['subjects_data'][0]['activity_vars']['c1'])
-# print(excell_to_db_var()[0]['subjects_data'][0]['activity_vars']['c2'])
-# print(excell_to_db_var()[0]['subjects_data'][0]['activity_vars']['c3'])
-# print(excell_to_db_var()[0]['subjects_data'][0]['activity_vars']['c4'])
+            print(c1)
+            print(c2)
+            print(c3)
+            print(c4)
+            print()
 
-
-
-# for data in excell_to_db_var():
-    # print(data)
-        
+overall_student_record()
