@@ -216,8 +216,26 @@ def student_record():
     combined_records = combine_records(records)
 
     # Print combined records
-    print(combined_records[0])
+    # print(combined_records[0]['subjects_data'])
+
+    # for subject, activities in combine_records[0]['subjects_data'].items():
+    #     # print(subject,  'and associated activities', 'c1: ', activities['c1'],  'c2: ', activities['c2'],  'c3: ', activities['c3'],  'c4: ', activities['c4'])
+    #     print(subject, '===>', activities)
+    # for subject, activities in combined_records[0]['subjects_data'].items():
+    #     print(subject,  'and associated activities', 'c1: ', activities['c1'],  'c2: ', activities['c2'],  'c3: ', activities['c3'],  'c4: ', activities['c4'])
+        # print(subject, '===>', activities)
     # getting  a record for each student
-    # for record in combined_records:
-    #     print(record)
+    for record in combined_records:
+        name=record['name']
+        lin=record['lin']
+        gender=record['gender']
+        stream=record['stream']
+
+        for subject, activities in record['subjects_data'].items():
+            c1=activities['c1']
+            c2=activities['c2']
+            c3=activities['c3']
+            c4=activities['c4']
+
+            print(subject,  'and associated activities', 'c1: ', activities['c1'],  'c2: ', activities['c2'],  'c3: ', activities['c3'],  'c4: ', activities['c4'])
 student_record()
