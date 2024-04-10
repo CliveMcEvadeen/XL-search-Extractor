@@ -102,81 +102,6 @@ def excell_to_db_var(records=get_records()):
         print("No records found.")
     
     return data_list
-
-# call to db insert
-# def overall_student_records():
-#     '''Collects student data and returns a list of records'''
-#     records = []
-
-#     for student_data in excell_to_db_var():
-#         name = student_data['name']
-#         lin = student_data['lin']
-#         gender = student_data['sex']
-#         stream = student_data['stream']
-
-#         subject_details = {}
-
-#         for subject_data in student_data['subjects_data']:
-#             for subject, activities in subject_data.items():
-#                 subject_details[subject] = activities
-                
-#             c1 = subject_details['activity_vars']['c1']
-#             c2 = subject_details['activity_vars']['c2']
-#             c3 = subject_details['activity_vars']['c3']
-#             c4 = subject_details['activity_vars']['c4']
-#             sub=subject_details['subject']
-
-#             record = {
-#                 'name': name,
-#                 'lin': lin,
-#                 'gender': gender,
-#                 'stream': stream,
-#                 'subject_and_details': {    'subject':sub,
-#                                                 'c1': c1,
-#                                                 'c2': c2,
-#                                                 'c3': c3,
-#                                                 'c4': c4
-#                 }
-#             }
-#             records.append(record)
-#     return records
-
-# print(overall_student_records()[0])
-
-# def overall_student_records():
-#     '''Collects student data and returns a list of records'''
-#     records = []
-
-#     for student_data in excell_to_db_var():
-#         name = student_data['name']
-#         lin = student_data['lin']
-#         gender = student_data['sex']
-#         stream = student_data['stream']
-
-#         for subject_data in student_data['subjects_data']:
-#             subject = subject_data['subject']
-#             activities = subject_data['activity_vars']
-#             c1 = activities.get('c1', None)
-#             c2 = activities.get('c2', None)
-#             c3 = activities.get('c3', None)
-#             c4 = activities.get('c4', None)
-
-#             record = {
-#                 'name': name,
-#                 'lin': lin,
-#                 'gender': gender,
-#                 'stream': stream,
-#                 'subject': subject,
-#                 'c1': c1,
-#                 'c2': c2,
-#                 'c3': c3,
-#                 'c4': c4
-#             }
-#             records.append(record)
-#     return records
-
-# print(overall_student_records()[0])
-
 def combine_records(records):
     combined_records = {}
 
@@ -212,30 +137,18 @@ def combine_records(records):
 
 # Example usage:
 def student_record():
+
     records = excell_to_db_var()
     combined_records = combine_records(records)
 
-    # Print combined records
-    # print(combined_records[0]['subjects_data'])
-
-    # for subject, activities in combine_records[0]['subjects_data'].items():
-    #     # print(subject,  'and associated activities', 'c1: ', activities['c1'],  'c2: ', activities['c2'],  'c3: ', activities['c3'],  'c4: ', activities['c4'])
-    #     print(subject, '===>', activities)
-    # for subject, activities in combined_records[0]['subjects_data'].items():
-    #     print(subject,  'and associated activities', 'c1: ', activities['c1'],  'c2: ', activities['c2'],  'c3: ', activities['c3'],  'c4: ', activities['c4'])
-        # print(subject, '===>', activities)
-    # getting  a record for each student
     for record in combined_records:
         name=record['name']
         lin=record['lin']
         gender=record['gender']
         stream=record['stream']
-
         for subject, activities in record['subjects_data'].items():
             c1=activities['c1']
             c2=activities['c2']
             c3=activities['c3']
             c4=activities['c4']
-
-            print(subject,  'and associated activities', 'c1: ', activities['c1'],  'c2: ', activities['c2'],  'c3: ', activities['c3'],  'c4: ', activities['c4'])
 student_record()
