@@ -134,7 +134,6 @@ def combine_records(records):
                 combined_records[name]['subjects_data'][subject].update(activity_vars)
 
     return list(combined_records.values())
-
 # Example usage:
 def student_record():
 
