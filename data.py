@@ -3,7 +3,7 @@ import pandas as pd
 def get_records():
     try:
         # Read data from the Excel file
-        df = pd.read_excel('card.xlsx', sheet_name='ACTIVITIES', skiprows=1)
+        df = pd.read_excel('card.xlsx', sheet_name='Sheet', skiprows=1)
         
         # Filter out columns with all NaN values
         df_filtered = df.dropna(axis=1, how='all')
@@ -150,4 +150,7 @@ def student_record():
             c2=activities['c2']
             c3=activities['c3']
             c4=activities['c4']
-student_record()
+            print(c2)
+            # print(c2)
+
+print(student_record())
