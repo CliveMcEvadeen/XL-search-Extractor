@@ -157,4 +157,7 @@ def student_record():
     
             print(f"Subject: {subject}, c1: {c1}, c2: {c2}, c3: {c3}, c4: {c4}")
 
+        overall_student_data={}
+        write_to_db={}
+
 print(student_record())
