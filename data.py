@@ -7,7 +7,7 @@ def get_records():
         
         # Filter out columns with all NaN values
         df_filtered = df.dropna(axis=1, how='all')
-        df_filtered = df_filtered.iloc[2:]
+        df_filtered = df_filtered.iloc[1:]
 
         subjects = df.iloc[1]
         # Dropping the first four columns
@@ -102,6 +102,7 @@ def excell_to_db_var(records=get_records()):
         print("No records found.")
     
     return data_list
+
 def combine_records(records):
     combined_records = {}
 
@@ -112,7 +113,7 @@ def combine_records(records):
         stream = record['stream']
 
         if name not in combined_records:
-            # Initialize a new combined record for this name
+            # Initialize a new combined record for this->name
             combined_records[name] = {
                 'name': name,
                 'lin': lin,
@@ -134,23 +135,26 @@ def combine_records(records):
                 combined_records[name]['subjects_data'][subject].update(activity_vars)
 
     return list(combined_records.values())
+
 # Example usage:
 def student_record():
-
     records = excell_to_db_var()
     combined_records = combine_records(records)
 
     for record in combined_records:
-        name=record['name']
-        lin=record['lin']
-        gender=record['gender']
-        stream=record['stream']
+        name = record['name']
+        lin = record['lin']
+        gender = record['gender']
+        stream = record['stream']
+
+        print(f"Name: {name}, LIN: {lin}, Gender: {gender}, Stream: {stream}")
+        
         for subject, activities in record['subjects_data'].items():
-            c1=activities['c1']
-            c2=activities['c2']
-            c3=activities['c3']
-            c4=activities['c4']
-            print(c2)
-            # print(c2)
+            c1 = activities['c1']
+            c2 = activities['c2']
+            c3 = activities['c3']
+            c4 = activities['c4']
+    
+            print(f"Subject: {subject}, c1: {c1}, c2: {c2}, c3: {c3}, c4: {c4}")
 
 print(student_record())
