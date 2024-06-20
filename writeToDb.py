@@ -1,4 +1,5 @@
 import pandas as pd
+from myapp.models import Student, Subject, StudentSubject, Marks
 
 def get_records():
     try:
@@ -79,16 +80,14 @@ def excell_to_db(records=get_records()):
     else:
         print("No records found.")
         
-# data test db variables
-        
 def excell_to_db_var(records=get_records()):
     data_list = []
     if records:
         for record in records:
             name = str(record['name'])
-            lin=str(record['lin'])
-            sex=str(record['sex'])
-            stream=str(record['stream'])
+            lin = str(record['lin'])
+            sex = str(record['sex'])
+            stream = str(record['stream'])
 
             subjects_data = []
             for sub, data in record['subjects'].items():
@@ -97,7 +96,7 @@ def excell_to_db_var(records=get_records()):
                 for idx, activity in enumerate(data['activity_marks'], start=1):
                     activity_vars[f'c{idx}'] = activity
                 subjects_data.append({'subject': subject, 'activity_vars': activity_vars})
-            data_list.append({'name': name,'lin':lin, 'sex':sex, 'stream': stream, 'subjects_data': subjects_data})
+            data_list.append({'name': name, 'lin': lin, 'sex': sex, 'stream': stream, 'subjects_data': subjects_data})
     else:
         print("No records found.")
     
@@ -136,7 +135,6 @@ def combine_records(records):
 
     return list(combined_records.values())
 
-# Example usage:
 def student_record():
     records = excell_to_db_var()
     combined_records = combine_records(records)
@@ -157,4 +155,46 @@ def student_record():
     
             print(f"Subject: {subject}, c1: {c1}, c2: {c2}, c3: {c3}, c4: {c4}")
 
+# New function to write data to the database
+def write_to_db():
+    combined_records = student_record()
+
+    if combined_records:
+        for record in combined_records:
+            student, created = Student.objects.get_or_create(
+                lin=record['lin'],
+                defaults={
+                    'name': record['name'],
+                    'gender': record['gender'],
+                    'stream': record['stream']
+                }
+            )
+
+            for subject_name, activities in record['subjects_data'].items():
+                subject, created = Subject.objects.get_or_create(name=subject_name)
+
+                student_subject, created = StudentSubject.objects.get_or_create(
+                    student=student,
+                    subject=subject,
+                    defaults={
+                        'c1': activities['c1'],
+                        'c2': activities['c2'],
+                        'c3': activities['c3'],
+                        'fs': activities['c4']
+                    }
+                )
+
+                for idx, activity in enumerate([activities['c1'], activities['c2'], activities['c3'], activities['c4']], start=1):
+                    Marks.objects.get_or_create(
+                        student_subject=student_subject,
+                        component_name=f'c{idx}',
+                        defaults={'marks': activity}
+                    )
+        print("Data successfully written to the database.")
+    else:
+        print("No records found.")
+
+# Call the new function to write the data to the database
+write_to_db()
+# Optionally, call student_record to print the data
 print(student_record())
